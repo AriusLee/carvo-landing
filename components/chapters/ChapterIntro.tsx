@@ -1,12 +1,11 @@
 "use client";
 /* 01 · INTRO (hero) — ported from chapters.jsx */
 import { useEffect, useRef } from "react";
-import { Reveal, Media } from "@/components/primitives";
-import { REDUCED, addFrame, clamp, scrollToY, useParallax, useDrift } from "@/lib/ticker";
+import { Reveal } from "@/components/primitives";
+import { REDUCED, addFrame, clamp, scrollToY, useParallax } from "@/lib/ticker";
 
 export function ChapterIntro() {
   const mediaRef = useParallax(70, 1.18);
-  const wmRef = useDrift(-70);
   const cueRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,13 +23,11 @@ export function ChapterIntro() {
     <section id="ch1" className="chapter hero" data-index="0" data-label="Intro">
       <div className="hero-bg">
         <div ref={mediaRef} className="hero-bg-inner">
-          <Media id="hero-bg" surface="beading" placeholder="Drop hero surface / beading shot" />
+          {/* placeholder footage — swap for real Carvo film later */}
+          <video className="hero-video" autoPlay muted loop playsInline preload="auto" src="/video/hero.mp4" />
         </div>
         <div className="hero-veil"></div>
       </div>
-
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img ref={wmRef} className="hero-watermark" src="/assets/carvo-wordmark.png" alt="" aria-hidden="true" />
 
       <div className="wrap hero-inner">
         <Reveal as="div" className="eyebrow hero-eyebrow" delay={120}>
