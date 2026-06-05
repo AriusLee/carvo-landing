@@ -2,7 +2,7 @@
 /* 03 · THE CRAFT (pinned scroll scenes) — ported from chapters.jsx */
 import { useEffect, useRef } from "react";
 import { Media } from "@/components/primitives";
-import { REDUCED, addFrame, clamp } from "@/lib/ticker";
+import { REDUCED, addFrame, clamp, getLenis } from "@/lib/ticker";
 
 type Craft = {
   n: string;
@@ -100,6 +100,93 @@ export function ChapterCraft() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // input-locked paging (fullpage-style): while the Craft section is pinned,
+  // intercept wheel/touch — a small scroll does nothing; once past a threshold it
+  // advances exactly ONE scene and locks input until the transition completes.
+  // Releases to normal scroll at the first scene (up) and last scene (down).
+  useEffect(() => {
+    if (REDUCED) return;
+    const THRESHOLD = 45; // wheel delta to cross before a page advances
+    let animating = false;
+    let accum = 0;
+    let lastT = 0;
+
+    const sceneY = (i: number) => {
+      const sec = secRef.current;
+      if (!sec) return window.scrollY;
+      const r = sec.getBoundingClientRect();
+      const total = r.height - (window.innerHeight || 1);
+      return r.top + window.scrollY + (clamp(i, 0, N - 1) / (N - 1)) * total;
+    };
+    const pin = () => {
+      const sec = secRef.current;
+      if (!sec) return null;
+      const r = sec.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const total = r.height - vh;
+      return {
+        pinned: r.top <= 1 && r.bottom > vh + 1,
+        idx: Math.round(clamp(-r.top / (total || 1)) * (N - 1)),
+      };
+    };
+    const page = (from: number, dir: number) => {
+      const target = clamp(from + dir, 0, N - 1);
+      if (target === from) return;
+      animating = true;
+      const lenis = getLenis();
+      const y = sceneY(target);
+      if (lenis && lenis.scrollTo) {
+        lenis.scrollTo(y, { duration: 0.7, lock: true, force: true, onComplete: () => (animating = false) });
+      } else {
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+      window.setTimeout(() => (animating = false), 950); // safety unlock
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      const info = pin();
+      if (!info || !info.pinned) return; // outside the pin → normal scroll
+      const dir = e.deltaY > 0 ? 1 : -1;
+      if ((dir > 0 && info.idx >= N - 1) || (dir < 0 && info.idx <= 0)) return; // release at edges
+      e.preventDefault();
+      e.stopPropagation();
+      if (animating) return;
+      const now = Date.now();
+      if (now - lastT > 200) accum = 0; // idle reset
+      lastT = now;
+      if ((accum > 0) !== (e.deltaY > 0)) accum = 0; // direction change
+      accum += e.deltaY;
+      if (Math.abs(accum) < THRESHOLD) return; // below the throttle → ignore
+      accum = 0;
+      page(info.idx, dir);
+    };
+
+    let touchY = 0;
+    const onTouchStart = (e: TouchEvent) => (touchY = e.touches[0].clientY);
+    const onTouchMove = (e: TouchEvent) => {
+      const info = pin();
+      if (!info || !info.pinned) return;
+      const dy = touchY - e.touches[0].clientY; // >0 = swipe up = advance
+      const dir = dy > 0 ? 1 : -1;
+      if ((dir > 0 && info.idx >= N - 1) || (dir < 0 && info.idx <= 0)) return;
+      e.preventDefault();
+      e.stopPropagation();
+      if (animating || Math.abs(dy) < 36) return;
+      touchY = e.touches[0].clientY;
+      page(info.idx, dir);
+    };
+
+    window.addEventListener("wheel", onWheel, { capture: true, passive: false });
+    window.addEventListener("touchstart", onTouchStart, { capture: true, passive: true });
+    window.addEventListener("touchmove", onTouchMove, { capture: true, passive: false });
+    return () => {
+      window.removeEventListener("wheel", onWheel, { capture: true });
+      window.removeEventListener("touchstart", onTouchStart, { capture: true });
+      window.removeEventListener("touchmove", onTouchMove, { capture: true });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <section
       id="ch3"
@@ -107,7 +194,7 @@ export function ChapterCraft() {
       className="chapter craft"
       data-index="2"
       data-label="The Craft"
-      style={{ height: N * 118 + "vh" }}
+      style={{ height: N * 85 + "vh" }}
     >
       <div ref={stageRef} className="craft-stage">
         <div className="craft-top wrap">

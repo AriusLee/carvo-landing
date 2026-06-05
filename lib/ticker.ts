@@ -24,11 +24,11 @@ let lenis: Lenis | null = null;
 export function initScroll() {
   if (REDUCED || !isBrowser || lenis) return;
   lenis = new Lenis({
-    duration: 1.15,
+    duration: 1.0,
     easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: true,
-    wheelMultiplier: 1.0,
-    touchMultiplier: 1.4,
+    wheelMultiplier: 1.5,
+    touchMultiplier: 1.8,
   });
   function raf(time: number) {
     lenis!.raf(time);
