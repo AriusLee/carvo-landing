@@ -16,7 +16,7 @@ const CHAPTERS = [
   { i: 1, n: "02", label: "Philosophy" },
   { i: 2, n: "03", label: "The Craft" },
   { i: 3, n: "04", label: "Selected Work" },
-  { i: 4, n: "05", label: "Studio & Contact" },
+  { i: 4, n: "05", label: "Contact us" },
 ];
 
 /* ---- page-load intro ---- */
