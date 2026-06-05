@@ -7,7 +7,3 @@
 .DS_Store
 next-env.d.ts
 *.tsbuildinfo
-
-# placeholder hero footage (third-party, 33MB) — replace with real Carvo film
-/public/video/
-/public/carvo-catalogue.pdf
