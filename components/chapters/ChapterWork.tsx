@@ -1,33 +1,49 @@
 "use client";
-/* 05 · SELECTED WORK — ported from chapters2.jsx */
-import { Reveal, Media } from "@/components/primitives";
-import { scrollToY, useParallax } from "@/lib/ticker";
+/* 04 · SELECTED WORK — uniform image grid + full-screen lightbox */
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { Reveal } from "@/components/primitives";
+import { getLenis } from "@/lib/ticker";
 
-type Tile = { id: string; cls: string; surface: string; drop: string };
-
-const GALLERY: Tile[] = [
-  { id: "work-1", cls: "g-tall", surface: "studio", drop: "Studio-lit exotic — hero" },
-  { id: "work-2", cls: "g-wide", surface: "beading", drop: "Beading / fresh coat" },
-  { id: "work-3", cls: "g-sq", surface: "film", drop: "PPF edge detail" },
-  { id: "work-4", cls: "g-sq", surface: "gloss", drop: "Gloss / reflection" },
-  { id: "work-5", cls: "g-wide", surface: "tint", drop: "Tinted glass at dusk" },
-  { id: "work-6", cls: "g-tall", surface: "studio", drop: "Three-quarter, low key" },
+const GALLERY: { src: string; pos?: string }[] = [
+  { src: "/images/work-1.jpg" },
+  { src: "/images/work-2.jpg", pos: "center 78%" }, // green Taycan — favour the car, hide bg
+  { src: "/images/work-3.jpg" },
+  { src: "/images/work-4.jpg" },
+  { src: "/images/work-5.jpg" },
+  { src: "/images/work-6.jpg" },
+  { src: "/images/work-7.jpg" },
+  { src: "/images/work-8.jpg" },
 ];
 
-function WorkTile({ item }: { item: Tile }) {
-  const inner = useParallax(54, 1.16);
-  return (
-    <Reveal className={"g-tile " + item.cls}>
-      <div className="g-media">
-        <div ref={inner} className="g-media-inner">
-          <Media id={item.id} surface={item.surface} placeholder={item.drop} />
-        </div>
-      </div>
-    </Reveal>
-  );
-}
-
 export function ChapterWork() {
+  const [idx, setIdx] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const close = () => setIdx(null);
+  const go = (d: number) =>
+    setIdx((i) => (i === null ? i : (i + d + GALLERY.length) % GALLERY.length));
+
+  // esc / arrow keys + scroll lock while the lightbox is open
+  useEffect(() => {
+    if (idx === null) return;
+    const lenis = getLenis();
+    lenis?.stop?.();
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") go(1);
+      else if (e.key === "ArrowLeft") go(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      lenis?.start?.();
+      document.body.style.overflow = "";
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [idx]);
+
   return (
     <section id="ch4" className="chapter work section" data-index="3" data-label="Selected Work">
       <div className="wrap">
@@ -35,32 +51,67 @@ export function ChapterWork() {
           <Reveal as="div" className="eyebrow">
             <span className="tick"></span>Selected Work
           </Reveal>
-          <h2 className="work-title display">
-            <Reveal as="span" clip>
-              Cars worth the patience.
-            </Reveal>
-          </h2>
-          <Reveal
-            as="a"
-            className="work-link"
-            href="#ch5"
-            delay={120}
-            onClick={(e: React.MouseEvent) => {
-              e.preventDefault();
-              scrollToY("#ch5", { offset: -10 });
-            }}
-            data-cursor
-          >
-            Discuss your car <span className="arrow">→</span>
-          </Reveal>
         </div>
 
         <div className="g-grid">
-          {GALLERY.map((it) => (
-            <WorkTile key={it.id} item={it} />
+          {GALLERY.map((it, i) => (
+            <Reveal key={it.src} className="g-tile" delay={(i % 4) * 80} data-cursor onClick={() => setIdx(i)}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                className="g-img"
+                src={it.src}
+                alt="Carvo selected work"
+                loading="lazy"
+                style={{ objectPosition: it.pos }}
+              />
+            </Reveal>
           ))}
         </div>
       </div>
+
+      {mounted &&
+        idx !== null &&
+        createPortal(
+          <div className="lightbox" onClick={close}>
+          <button className="lb-close" data-cursor aria-label="Close" onClick={close}>
+            <span></span>
+            <span></span>
+          </button>
+          <button
+            className="lb-arrow lb-prev"
+            data-cursor
+            aria-label="Previous"
+            onClick={(e) => {
+              e.stopPropagation();
+              go(-1);
+            }}
+          >
+            ‹
+          </button>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="lb-img"
+            src={GALLERY[idx].src}
+            alt="Carvo selected work"
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            className="lb-arrow lb-next"
+            data-cursor
+            aria-label="Next"
+            onClick={(e) => {
+              e.stopPropagation();
+              go(1);
+            }}
+          >
+            ›
+          </button>
+          <div className="lb-count">
+            {String(idx + 1).padStart(2, "0")} / {String(GALLERY.length).padStart(2, "0")}
+          </div>
+        </div>,
+          document.body,
+        )}
     </section>
   );
 }
