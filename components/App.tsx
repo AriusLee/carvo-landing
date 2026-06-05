@@ -42,7 +42,7 @@ function Intro({ onDone }: { onDone: () => void }) {
       <div className="intro-inner">
         <div className="intro-wm-wrap">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="intro-wm" src="/assets/carvo-wordmark.png" alt="" />
+          <img className="intro-wm" src="/assets/carvo-wordmark.svg" alt="" />
         </div>
         <div className="intro-bar">
           <span></span>
@@ -77,7 +77,7 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
           }}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/assets/carvo-wordmark.png" alt="CARVO" />
+          <img src="/assets/carvo-wordmark.svg" alt="CARVO" />
         </a>
         <nav className="tb-right">
           <span className="tb-loc">Puchong · Petaling Jaya</span>
@@ -118,7 +118,7 @@ function Drawer({
     <div className={"drawer" + (open ? " open" : "")} aria-hidden={!open}>
       <div className="drawer-head wrap">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img className="drawer-wm" src="/assets/carvo-wordmark.png" alt="CARVO" />
+        <img className="drawer-wm" src="/assets/carvo-wordmark.svg" alt="CARVO" />
         <button className="drawer-close" data-cursor onClick={onClose} aria-label="Close menu">
           <span></span>
           <span></span>

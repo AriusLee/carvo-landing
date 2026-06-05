@@ -90,7 +90,7 @@ export function ChapterStudio() {
         <div className="wrap footer-grid">
           <div className="footer-brand">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img className="footer-wm" src="/assets/carvo-wordmark.png" alt="CARVO" />
+            <img className="footer-wm" src="/assets/carvo-wordmark.svg" alt="CARVO" />
             <div className="footer-legal">CARVO MALAYSIA SDN. BHD.</div>
             <div className="footer-services">Window Film · Coating · PPF · Car Mat</div>
           </div>
