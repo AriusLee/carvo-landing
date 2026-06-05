@@ -220,11 +220,12 @@ export default function App() {
     const unsub = addFrame(() => {
       const mid = (window.innerHeight || 0) / 2;
       let best = 0;
+      // no break: the hero is pinned (always spans mid), so the LAST section
+      // spanning the middle is the one currently covering the viewport.
       for (const s of secs) {
         const r = s.getBoundingClientRect();
         if (r.top <= mid && r.bottom >= mid) {
           best = parseInt(s.dataset.index || "0", 10) || 0;
-          break;
         }
       }
       if (best !== cur) {
