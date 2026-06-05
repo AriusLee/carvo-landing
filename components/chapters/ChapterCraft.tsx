@@ -10,19 +10,39 @@ type Craft = {
   surface: string;
   slot: string;
   drop: string;
+  img?: string;
+  imgPos?: string;
   line: string;
   points: string[];
+  table: {
+    cols: string[];
+    rows: string[][];
+    note?: string;
+    swatches?: string[];
+  };
 };
 
 const CRAFT: Craft[] = [
   {
     n: "01",
-    name: "Window Film",
+    name: "Window Tinting",
     surface: "tint",
     slot: "craft-tint",
     drop: "Drop tint / cabin light shot",
-    line: "Clarity by day, privacy when wanted — a cabin composed in the Malaysian sun.",
-    points: ["IR heat rejection", "99% UV block", "Optically clear"],
+    img: "/images/craft-window.jpg",
+    imgPos: "center",
+    line: "Titanium-series nano-ceramic and sputter films — intelligent heat control with ultra clarity, for a cabin composed in the Malaysian sun.",
+    points: ["Up to 97% IR rejection", "99% UV rejection", "Zero blue light, zero haze"],
+    table: {
+      cols: ["Film", "Warranty"],
+      rows: [
+        ["Nano Ceramic · 2 mil", "5 / 10 yrs"],
+        ["Titanium Film · 2 mil", "10 yrs"],
+        ["Nano Ceramic Safety · 4 mil", "10 yrs"],
+        ["Titanium Sputter Safety · 4 mil", "10 yrs"],
+      ],
+      note: "Titanium Sputter Safety is not TnG-compatible.",
+    },
   },
   {
     n: "02",
@@ -30,8 +50,20 @@ const CRAFT: Craft[] = [
     surface: "gloss",
     slot: "craft-coat",
     drop: "Drop liquid-glass gloss shot",
-    line: "A liquid-glass layer that deepens the paint and makes every wash effortless.",
-    points: ["Multi-layer gloss", "Hydrophobic finish", "UV & oxidation defence"],
+    img: "/images/craft-coating.jpg",
+    imgPos: "center",
+    line: "German-formulated ceramic serums tuned for the tropical climate — a liquid-glass layer that deepens the paint and makes water bead and run.",
+    points: ["Hydrophobic high-gloss", "CV3–CV10 grades", "Up to 6-year warranty"],
+    table: {
+      cols: ["Size", "CV3 · 2y", "CV5 · 3y", "CV7 · 4y", "CV9 · 5y", "CV10 · 6y"],
+      rows: [
+        ["S", "1,800", "2,400", "2,900", "3,700", "4,500"],
+        ["M", "2,000", "2,600", "3,100", "3,900", "4,800"],
+        ["L", "2,200", "2,800", "3,300", "4,100", "5,100"],
+        ["XL", "2,500", "3,100", "3,600", "4,400", "5,400"],
+      ],
+      note: "Retail price (RM). Add-on coating: leather, trim, rim, headlamp, windscreen.",
+    },
   },
   {
     n: "03",
@@ -39,8 +71,19 @@ const CRAFT: Craft[] = [
     surface: "film",
     slot: "craft-ppf",
     drop: "Drop PPF film-edge macro",
-    line: "Invisible, self-healing armour against stone chips and the small violences of the road.",
-    points: ["Self-healing top coat", "Edge-wrapped, model-cut", "Multi-year film warranty"],
+    img: "/images/craft-ppf.jpg",
+    imgPos: "center",
+    line: "World-class aliphatic-TPU film (Lubrizol · Covestro · Ashland) — self-healing armour against stone chips and the small violences of the road.",
+    points: ["Self-healing top coat", "Clear, matte & 300+ colours", "Up to 7-year warranty"],
+    table: {
+      cols: ["Type", "Detail"],
+      rows: [
+        ["PPU Clear", "7.5 mil · 5 yr  /  8.5 mil · 7 yr"],
+        ["PPU Matte", "Matte finish · 7.5 mil · 5 yr"],
+        ["TPU Color PPF", "300+ colours · 5 yr"],
+      ],
+      note: "5-layer build · self-healing, hydrophobic, anti-yellowing.",
+    },
   },
   {
     n: "04",
@@ -48,8 +91,19 @@ const CRAFT: Craft[] = [
     surface: "gloss",
     slot: "craft-mat",
     drop: "Drop tailored mat / interior shot",
-    line: "Tailored, premium floor protection — the finishing detail.",
-    points: ["Custom-fit to model", "Easy-clean", "Refined materials"],
+    img: "/images/craft-carmat.jpg",
+    imgPos: "left bottom",
+    line: "Custom-made fitting, precision-cut to your vehicle's contours — EVA foam or rubber, for a flawless fit with anti-slip safety.",
+    points: ["Custom-fit to your model", "EVA foam / rubber", "Anti-slip, up to 5-yr"],
+    table: {
+      cols: ["Material", "Thick", "Anti-Slip", "Feel", "Warranty"],
+      rows: [
+        ["EVA Foam", "10 mm", "Velcro", "Soft", "5 yrs"],
+        ["Rubber", "5 mm", "Spike", "Stiff", "3 yrs"],
+      ],
+      note: "Colour options:",
+      swatches: ["#D23B2E", "#2563EB", "#EAB308", "#5FA83C", "#1A1A1A"],
+    },
   },
 ];
 
@@ -201,12 +255,17 @@ export function ChapterCraft() {
           <div className="eyebrow">
             <span className="tick"></span>The Craft
           </div>
-          <div className="craft-counter">
-            <span ref={counterRef} className="cc-now display">
-              01
-            </span>
-            <span className="cc-sep">/</span>
-            <span className="cc-total">{String(N).padStart(2, "0")}</span>
+          <div className="craft-top-right">
+            <a className="craft-dl" href="/carvo-catalogue.pdf" download data-cursor>
+              Download catalogue <span className="arrow">↓</span>
+            </a>
+            <div className="craft-counter">
+              <span ref={counterRef} className="cc-now display">
+                01
+              </span>
+              <span className="cc-sep">/</span>
+              <span className="cc-total">{String(N).padStart(2, "0")}</span>
+            </div>
           </div>
         </div>
 
@@ -250,10 +309,46 @@ export function ChapterCraft() {
                     </li>
                   ))}
                 </ul>
+
+                <div
+                  className="craft-table"
+                  style={{ gridTemplateColumns: `repeat(${c.table.cols.length}, minmax(0,1fr))` }}
+                >
+                  {c.table.cols.map((h, hi) => (
+                    <span key={"h" + hi} className="ct-h">
+                      {h}
+                    </span>
+                  ))}
+                  {c.table.rows.map((row, ri) =>
+                    row.map((cell, ci) => (
+                      <span key={ri + "-" + ci} className={"ct-c" + (ci === 0 ? " ct-lead" : "")}>
+                        {cell}
+                      </span>
+                    )),
+                  )}
+                </div>
+
+                {(c.table.note || c.table.swatches) && (
+                  <div className="craft-meta">
+                    {c.table.note && <span className="craft-note">{c.table.note}</span>}
+                    {c.table.swatches && (
+                      <span className="craft-swatches">
+                        {c.table.swatches.map((s, si) => (
+                          <span key={si} className="cw" style={{ background: s }}></span>
+                        ))}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
               <div className="craft-media">
                 <div className="craft-media-inner">
-                  <Media id={c.slot} surface={c.surface} placeholder={c.drop} />
+                  {c.img ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img className="craft-img" src={c.img} alt={c.name} style={{ objectPosition: c.imgPos }} />
+                  ) : (
+                    <Media id={c.slot} surface={c.surface} placeholder={c.drop} />
+                  )}
                 </div>
                 <span className="craft-media-tag">
                   {c.n} · {c.name}

@@ -53,7 +53,7 @@ export function ChapterIntro() {
         </h1>
 
         <Reveal className="hero-sub" delay={420}>
-          Window film · ceramic coating · paint protection — executed to a standard you can see at
+          Window tinting · ceramic coating · paint protection — executed to a standard you can see at
           arm&apos;s length.
         </Reveal>
 
@@ -61,7 +61,7 @@ export function ChapterIntro() {
           <button
             className="btn btn-solid"
             data-cursor
-            onClick={() => scrollToY("#ch6", { offset: -10 })}
+            onClick={() => scrollToY("#ch5", { offset: -10 })}
           >
             Book a consultation
           </button>

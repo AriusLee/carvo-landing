@@ -29,7 +29,7 @@ function WorkTile({ item }: { item: Tile }) {
 
 export function ChapterWork() {
   return (
-    <section id="ch5" className="chapter work section" data-index="4" data-label="Selected Work">
+    <section id="ch4" className="chapter work section" data-index="3" data-label="Selected Work">
       <div className="wrap">
         <div className="work-head">
           <Reveal as="div" className="eyebrow">
@@ -43,11 +43,11 @@ export function ChapterWork() {
           <Reveal
             as="a"
             className="work-link"
-            href="#ch6"
+            href="#ch5"
             delay={120}
             onClick={(e: React.MouseEvent) => {
               e.preventDefault();
-              scrollToY("#ch6", { offset: -10 });
+              scrollToY("#ch5", { offset: -10 });
             }}
             data-cursor
           >

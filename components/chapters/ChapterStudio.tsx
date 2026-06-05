@@ -18,7 +18,7 @@ const STUDIOS = [
 export function ChapterStudio() {
   const mediaRef = useParallax(60, 1.16);
   return (
-    <section id="ch6" className="chapter studio section" data-index="5" data-label="Studio & Contact">
+    <section id="ch5" className="chapter studio section" data-index="4" data-label="Studio & Contact">
       <div className="studio-bg">
         <div ref={mediaRef} className="studio-bg-inner">
           <Media id="studio-bg" surface="studio" placeholder="Drop studio / low-key exotic" />
@@ -73,6 +73,9 @@ export function ChapterStudio() {
             <a className="btn btn-ghost" href="mailto:carvomalaysia@gmail.com" data-cursor>
               carvomalaysia@gmail.com
             </a>
+            <a className="btn btn-ghost" href="/carvo-catalogue.pdf" download data-cursor>
+              Download catalogue <span className="arrow">↓</span>
+            </a>
             <a
               className="btn-text"
               href="https://instagram.com/carvomalaysia"
@@ -92,7 +95,7 @@ export function ChapterStudio() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="footer-wm" src="/assets/carvo-wordmark.svg" alt="CARVO" />
             <div className="footer-legal">CARVO MALAYSIA SDN. BHD.</div>
-            <div className="footer-services">Window Film · Coating · PPF · Car Mat</div>
+            <div className="footer-services">Window Tinting · Coating · PPF · Car Mat</div>
           </div>
           <div className="footer-studios">
             {STUDIOS.map((s) => (

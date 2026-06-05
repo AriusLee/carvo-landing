@@ -8,7 +8,6 @@ import { REDUCED, addFrame, clamp, getLenis, initScroll, scrollToY } from "@/lib
 import { ChapterIntro } from "@/components/chapters/ChapterIntro";
 import { ChapterPhilosophy } from "@/components/chapters/ChapterPhilosophy";
 import { ChapterCraft } from "@/components/chapters/ChapterCraft";
-import { ChapterProcess } from "@/components/chapters/ChapterProcess";
 import { ChapterWork } from "@/components/chapters/ChapterWork";
 import { ChapterStudio } from "@/components/chapters/ChapterStudio";
 
@@ -16,9 +15,8 @@ const CHAPTERS = [
   { i: 0, n: "01", label: "Intro" },
   { i: 1, n: "02", label: "Philosophy" },
   { i: 2, n: "03", label: "The Craft" },
-  { i: 3, n: "04", label: "Process" },
-  { i: 4, n: "05", label: "Selected Work" },
-  { i: 5, n: "06", label: "Studio & Contact" },
+  { i: 3, n: "04", label: "Selected Work" },
+  { i: 4, n: "05", label: "Studio & Contact" },
 ];
 
 /* ---- page-load intro ---- */
@@ -84,7 +82,7 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
           <button
             className="btn btn-solid btn-sm tb-book"
             data-cursor
-            onClick={() => scrollToY("#ch6", { offset: -10 })}
+            onClick={() => scrollToY("#ch5", { offset: -10 })}
           >
             Book a consultation
           </button>
@@ -313,7 +311,6 @@ export default function App() {
         <ChapterIntro />
         <ChapterPhilosophy />
         <ChapterCraft />
-        <ChapterProcess />
         <ChapterWork />
         <ChapterStudio />
       </main>

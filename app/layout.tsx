@@ -20,7 +20,7 @@ const archivo = Archivo({
 export const metadata: Metadata = {
   title: "CARVO — Automotive Protection",
   description:
-    "Carvo Malaysia — premium automotive protection. Window film, ceramic coating, paint protection film, and car mats, executed to a standard you can see at arm's length.",
+    "Carvo Malaysia — premium automotive protection. Window tinting, ceramic coating, paint protection film, and car mats, executed to a standard you can see at arm's length.",
 };
 
 export const viewport: Viewport = {
