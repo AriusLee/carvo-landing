@@ -20,9 +20,9 @@ const mapsUrl = (a: string) =>
 export function ChapterStudio() {
   return (
     <section
-      id='ch5'
+      id='ch8'
       className='chapter studio section'
-      data-index='4'
+      data-index='7'
       data-label='Contact us'
     >
       <div className='studio-bg'>

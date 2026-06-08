@@ -61,14 +61,14 @@ export function ChapterIntro() {
           <button
             className="btn btn-solid"
             data-cursor
-            onClick={() => scrollToY("#ch5", { offset: -10 })}
+            onClick={() => scrollToY("#ch8", { offset: -10 })}
           >
             Book a consultation
           </button>
           <button
             className="btn btn-ghost"
             data-cursor
-            onClick={() => scrollToY("#ch3", { offset: -10 })}
+            onClick={() => scrollToY("#ch4", { offset: -10 })}
           >
             Explore the craft <span className="arrow">→</span>
           </button>

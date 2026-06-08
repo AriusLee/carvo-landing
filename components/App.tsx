@@ -7,16 +7,22 @@ import React, { useEffect, useRef, useState } from "react";
 import { REDUCED, addFrame, clamp, getLenis, initScroll, scrollToY } from "@/lib/ticker";
 import { ChapterIntro } from "@/components/chapters/ChapterIntro";
 import { ChapterPhilosophy } from "@/components/chapters/ChapterPhilosophy";
+import { ChapterWhy } from "@/components/chapters/ChapterWhy";
 import { ChapterCraft } from "@/components/chapters/ChapterCraft";
 import { ChapterWork } from "@/components/chapters/ChapterWork";
+import { ChapterTestimonials } from "@/components/chapters/ChapterTestimonials";
+import { ChapterLearn } from "@/components/chapters/ChapterLearn";
 import { ChapterStudio } from "@/components/chapters/ChapterStudio";
 
 const CHAPTERS = [
   { i: 0, n: "01", label: "Intro" },
   { i: 1, n: "02", label: "Philosophy" },
-  { i: 2, n: "03", label: "The Craft" },
-  { i: 3, n: "04", label: "Selected Work" },
-  { i: 4, n: "05", label: "Contact us" },
+  { i: 2, n: "03", label: "Why Carvo" },
+  { i: 3, n: "04", label: "The Craft" },
+  { i: 4, n: "05", label: "Selected Work" },
+  { i: 5, n: "06", label: "Reviews" },
+  { i: 6, n: "07", label: "Learn" },
+  { i: 7, n: "08", label: "Contact us" },
 ];
 
 /* ---- page-load intro ---- */
@@ -82,7 +88,7 @@ function TopBar({ onMenu }: { onMenu: () => void }) {
           <button
             className="btn btn-solid btn-sm tb-book"
             data-cursor
-            onClick={() => scrollToY("#ch5", { offset: -10 })}
+            onClick={() => scrollToY("#ch8", { offset: -10 })}
           >
             Book a consultation
           </button>
@@ -310,8 +316,11 @@ export default function App() {
       <main className={"page" + (introDone ? " ready" : "")}>
         <ChapterIntro />
         <ChapterPhilosophy />
+        <ChapterWhy />
         <ChapterCraft />
         <ChapterWork />
+        <ChapterTestimonials />
+        <ChapterLearn />
         <ChapterStudio />
       </main>
     </>

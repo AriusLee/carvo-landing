@@ -45,7 +45,7 @@ export function ChapterWork() {
   }, [idx]);
 
   return (
-    <section id="ch4" className="chapter work section" data-index="3" data-label="Selected Work">
+    <section id="ch5" className="chapter work section" data-index="4" data-label="Selected Work">
       <div className="wrap">
         <div className="work-head">
           <Reveal as="div" className="eyebrow">

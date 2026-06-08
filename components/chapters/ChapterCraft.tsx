@@ -243,10 +243,10 @@ export function ChapterCraft() {
 
   return (
     <section
-      id="ch3"
+      id="ch4"
       ref={secRef}
       className="chapter craft"
-      data-index="2"
+      data-index="3"
       data-label="The Craft"
       style={{ height: N * 85 + "vh" }}
     >
