@@ -1,8 +1,8 @@
 "use client";
-/* 07 · LEARN — educational videos (client-requested, llumar.com.my analogue).
-   videoId / poster are PLACEHOLDERS: drop the real YouTube IDs and poster
-   frames in below. An empty videoId shows a graceful "coming soon" panel,
-   so the section is presentable before the films are shot. */
+/* 07 · LEARN — cinematic featured player + numbered playlist (client-requested,
+   llumar.com.my analogue). videoId / poster are PLACEHOLDERS: drop the real
+   YouTube IDs and poster frames in below. An empty videoId shows a graceful
+   "coming soon" panel, so the section is presentable before the films are shot. */
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Reveal } from "@/components/primitives";
@@ -46,17 +46,25 @@ const LESSONS: Lesson[] = [
     poster: "/images/craft-ppf.jpg",
     videoId: "",
   },
+  {
+    topic: "Aftercare",
+    title: "Caring for your car after protection",
+    length: "2 min",
+    poster: "/images/work-3.jpg",
+    videoId: "",
+  },
 ];
 
 export function ChapterLearn() {
-  const [idx, setIdx] = useState<number | null>(null);
+  const [open, setOpen] = useState<number | null>(null); // modal (playing) index
+  const [featured, setFeatured] = useState(0); // previewed index
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
-  const close = () => setIdx(null);
+  const close = () => setOpen(null);
 
   // esc + scroll lock while the player is open
   useEffect(() => {
-    if (idx === null) return;
+    if (open === null) return;
     const lenis = getLenis();
     lenis?.stop?.();
     document.body.style.overflow = "hidden";
@@ -69,9 +77,10 @@ export function ChapterLearn() {
       lenis?.start?.();
       document.body.style.overflow = "";
     };
-  }, [idx]);
+  }, [open]);
 
-  const active = idx === null ? null : LESSONS[idx];
+  const f = LESSONS[featured];
+  const active = open === null ? null : LESSONS[open];
 
   return (
     <section id="ch7" className="chapter learn section" data-index="6" data-label="Learn">
@@ -82,51 +91,80 @@ export function ChapterLearn() {
           </Reveal>
           <h2 className="learn-title display">
             <Reveal as="span" className="lt-line" delay={0}>
-              Understand
-            </Reveal>
-            <Reveal as="span" className="lt-line accent" delay={90}>
-              the work.
+              Understand <span className="accent">the work.</span>
             </Reveal>
           </h2>
-          <Reveal as="p" className="learn-sub" delay={200}>
+          <Reveal as="p" className="learn-sub" delay={160}>
             Short films on how film, coating and PPF actually protect your car — so
             you can choose with your eyes open.
           </Reveal>
         </div>
 
-        <div className="learn-grid">
-          {LESSONS.map((l, i) => (
-            <Reveal
-              as="button"
-              className="learn-card"
-              key={l.title}
-              delay={(i % 2) * 90}
-              data-cursor
-              onClick={() => setIdx(i)}
-              aria-label={`Play: ${l.title}`}
-            >
-              <span className="lc-media">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  className="lc-img"
-                  src={l.poster}
-                  alt=""
-                  loading="lazy"
-                  style={{ objectPosition: l.pos }}
-                />
-                <span className="lc-play" aria-hidden="true">
-                  <span className="lc-tri"></span>
-                </span>
+        <Reveal className="learn-stage" margin={1}>
+          {/* featured preview — plays the currently-highlighted lesson */}
+          <button
+            className="learn-feature"
+            data-cursor
+            onClick={() => setOpen(featured)}
+            aria-label={`Play: ${f.title}`}
+          >
+            <span className="lf-media">
+              {/* key remounts the image so it cross-fades when the selection changes */}
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                key={featured}
+                className="lf-img"
+                src={f.poster}
+                alt=""
+                style={{ objectPosition: f.pos }}
+              />
+              <span className="lf-veil" aria-hidden="true"></span>
+            </span>
+            <span className="lc-play lf-play" aria-hidden="true">
+              <span className="lc-tri"></span>
+            </span>
+            <span className="lf-info">
+              <span className="lf-topic">
+                {f.topic} · {f.length}
               </span>
-              <span className="lc-info">
-                <span className="lc-topic">
-                  {l.topic} · {l.length}
-                </span>
-                <span className="lc-title">{l.title}</span>
+              <span className="lf-title display">{f.title}</span>
+              <span className="lf-cue">
+                Watch now <span className="arrow">→</span>
               </span>
-            </Reveal>
-          ))}
-        </div>
+            </span>
+          </button>
+
+          {/* numbered playlist — hover/focus previews, click plays */}
+          <ol className="learn-list">
+            {LESSONS.map((l, i) => (
+              <li key={l.title}>
+                <button
+                  className={"ll-row" + (i === featured ? " on" : "")}
+                  data-cursor
+                  onMouseEnter={() => setFeatured(i)}
+                  onFocus={() => setFeatured(i)}
+                  onClick={() => {
+                    setFeatured(i);
+                    setOpen(i);
+                  }}
+                  aria-label={`Play: ${l.title}`}
+                >
+                  <span className="ll-n display" aria-hidden="true">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="ll-text">
+                    <span className="ll-topic">{l.topic}</span>
+                    <span className="ll-title">{l.title}</span>
+                  </span>
+                  <span className="ll-len">{l.length}</span>
+                  <span className="ll-cue" aria-hidden="true">
+                    <span className="ll-tri"></span>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </Reveal>
       </div>
 
       {mounted &&
