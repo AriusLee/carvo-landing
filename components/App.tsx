@@ -11,7 +11,7 @@ import { ChapterWhy } from "@/components/chapters/ChapterWhy";
 import { ChapterCraft } from "@/components/chapters/ChapterCraft";
 import { ChapterWork } from "@/components/chapters/ChapterWork";
 import { ChapterTestimonials } from "@/components/chapters/ChapterTestimonials";
-import { ChapterLearn } from "@/components/chapters/ChapterLearn";
+// import { ChapterLearn } from "@/components/chapters/ChapterLearn"; // hidden with the Learn chapter below
 import { ChapterStudio } from "@/components/chapters/ChapterStudio";
 
 const CHAPTERS = [
@@ -21,8 +21,9 @@ const CHAPTERS = [
   { i: 3, n: "04", label: "The Craft" },
   { i: 4, n: "05", label: "Selected Work" },
   { i: 5, n: "06", label: "Reviews" },
-  { i: 6, n: "07", label: "Learn" },
-  { i: 7, n: "08", label: "Contact us" },
+  // "Learn" (tutorial videos) hidden until the films are shot — restore the
+  // entry and the <ChapterLearn /> section together.
+  { i: 6, n: "07", label: "Contact us" },
 ];
 
 /* ---- page-load intro ---- */
@@ -320,7 +321,7 @@ export default function App() {
         <ChapterCraft />
         <ChapterWork />
         <ChapterTestimonials />
-        <ChapterLearn />
+        {/* <ChapterLearn /> — tutorial videos hidden until the films are ready */}
         <ChapterStudio />
       </main>
     </>
