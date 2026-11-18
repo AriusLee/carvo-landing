@@ -64,7 +64,7 @@ const CRAFT: Craft[] = [
         ["L", "2,200", "2,800", "3,300", "4,100", "5,100"],
         ["XL", "2,500", "3,100", "3,600", "4,400", "5,400"],
       ],
-      note: "Retail price (RM). Add-on coating: leather, trim, rim, headlamp, windscreen.",
+      note: "Retail price (RM). Add-on coating 350 / 550 each: leather, trim, rim, headlamp, windscreen.",
     },
   },
   {
@@ -82,7 +82,7 @@ const CRAFT: Craft[] = [
       rows: [
         ["C70 Clear · 7.5 mil", "5 yrs", "2,000"],
         ["C80 Clear · 8.5 mil", "7 yrs", "2,800"],
-        ["M70 Matte · 7.5 mil", "5 yrs", "9,800"],
+        ["M70 Matte · 7.5 mil", "5 yrs", "12,800"],
         ["TPU Colour · 300+", "5 yrs", "13,800"],
       ],
       note: "Retail price (RM) from the entry package, size S/M. Sunroof PPF from 800 · windscreen PPF from 1,600.",
@@ -105,7 +105,7 @@ const CRAFT: Craft[] = [
         ["Rubber", "5 mm", "3 yrs", "399", "659"],
       ],
       note: "Retail price (RM), sizes S/M/L. Boot only: 150 · 120. Colour options:",
-      swatches: ["#D23B2E", "#2563EB", "#EAB308", "#5FA83C", "#1A1A1A"],
+      swatches: ["#D23B2E", "#2563EB", "#F15A22", "#5FA83C", "#1A1A1A"],
     },
   },
 ];
