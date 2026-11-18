@@ -78,14 +78,14 @@ const CRAFT: Craft[] = [
     line: "World-class aliphatic-TPU film (Lubrizol · Covestro · Ashland) — self-healing armour against stone chips and the small violences of the road.",
     points: ["Self-healing top coat", "Clear, matte & 300+ colours", "Up to 7-year warranty"],
     table: {
-      cols: ["Film", "Warranty", "From"],
+      cols: ["Film", "Warranty", "Full car from"],
       rows: [
-        ["C70 Clear · 7.5 mil", "5 yrs", "2,000"],
-        ["C80 Clear · 8.5 mil", "7 yrs", "2,800"],
+        ["C70 Clear · 7.5 mil", "5 yrs", "9,800"],
+        ["C80 Clear · 8.5 mil", "7 yrs", "12,800"],
         ["M70 Matte · 7.5 mil", "5 yrs", "12,800"],
         ["TPU Colour · 300+", "5 yrs", "13,800"],
       ],
-      note: "Retail price (RM) from the entry package, size S/M. Sunroof PPF from 800 · windscreen PPF from 1,600.",
+      note: "Retail price (RM) for full car PPF, size S/M. Bonnet and full front packages available on clear films. Sunroof PPF from 800 · windscreen PPF from 1,600.",
     },
   },
   {
