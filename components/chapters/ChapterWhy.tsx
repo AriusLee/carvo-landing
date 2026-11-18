@@ -65,7 +65,7 @@ const REASONS: Reason[] = [
   {
     n: "01",
     title: "World-class materials",
-    line: "Aliphatic-TPU film from Lubrizol, Covestro and Ashland · German-formulated ceramic serums · titanium-series nano films. Nothing thinner goes on your car.",
+    line: "Aliphatic-TPU film from Lubrizol USA and Ashland USA · German-formulated ceramic serums · titanium-series nano films. Nothing thinner goes on your car.",
     icon: <IconDiamond />,
   },
   {

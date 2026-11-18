@@ -75,7 +75,7 @@ const CRAFT: Craft[] = [
     drop: "Drop PPF film-edge macro",
     img: "/images/craft-ppf.jpg",
     imgPos: "center",
-    line: "World-class aliphatic-TPU film (Lubrizol · Covestro · Ashland) — self-healing armour against stone chips and the small violences of the road.",
+    line: "World-class aliphatic-TPU film (Lubrizol USA · Ashland USA) — self-healing armour against stone chips and the small violences of the road.",
     points: ["Self-healing top coat", "Clear, matte & 300+ colours", "Up to 7-year warranty"],
     table: {
       cols: ["Film", "Warranty", "Full car from"],
